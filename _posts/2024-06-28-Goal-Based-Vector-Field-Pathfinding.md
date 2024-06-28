@@ -12,7 +12,7 @@ I want to keep this article about the algorithm itself, so I won't be talking ab
 
 <p>
 Pathfinding algorithms are used in simulations and games extensively since they are a fundamental part of them.
-There are many pathfinding algorithms out there. Some of the more know ones are \(A^*\), Dijkstra, BFS, DFS, etc. We will actually use BFS to create the integration field.
+There are many pathfinding algorithms out there. Some of the more known ones are \(A^*\), Dijkstra, BFS, DFS, etc. We will actually use BFS to create the integration field.
 </p>
 
 <h2>Vector Fields</h2>
@@ -25,7 +25,7 @@ Given a subset \( S \) of \( \mathbb{R}^n \), a vector field is represented by a
 </p>
 
 <p>
-This is of course for euclidean spaces. The definition might sound a bit abstract, but it's actually quite simple. A vector field is just a function that assigns a vector to each point in space. This can be used to represent things like fluid flow, magnetic fields, and many other things.
+This is of course for Euclidean spaces. The definition might sound a bit abstract, but it's actually quite simple. A vector field is just a function that assigns a vector to each point in space. This can be used to represent things like fluid flow, magnetic fields, and many other things.
 </p>
 
 <p>
@@ -48,8 +48,8 @@ when I was researching about this topic, I found that they all use a 2D grid to 
 
 <p>
 This will be our terrain but the algorithm can be used in any shaped terrain, so one can modify the game terrain freely without having to worry about the pathfinding algorithm being broken.
-As you can see the terrain has 2 different heights and a 2 paths that lead to the higher ground, one is 
-a lot smoother than the other but the smoother path is longer. In this implementation of the algorithm
+As you can see the terrain has 2 different heights and 2 paths that lead to the higher ground, one is 
+a lot smoother than the other but the smoother path is also longer. In this implementation of the algorithm
 the agents will actually choose the smoother path, I wanted to remark this in the beginning since it might not be the desired behaviour for some.
 </p>
 
@@ -61,17 +61,23 @@ making cells have a base cost that depends on height and then make each cell hav
 </p>
 
 <p>
-The approach that I've decided the best was to dramatically increase the cost of cells that have a certain height difference with their neighbours.
-With some of my earlier approaches, I was increasing the cost of cells that are on the higher ground no matter what but if you think about it
-the agent might want to travel to another point on the high ground while the agent itself is on the higher ground so it doesn't make sense.
+With some of my earlier approaches, I was increasing the cost of cells that are on the higher ground no matter what but if you think about it,
+if the agent is already at the high ground and simply wants to move forward while staying at the same height, it shouldn't be penalized.
+</p>
 
+<p>
+The approach that I've decided to be the best was to dramatically increase the cost of cells that have a certain height difference with their neighbours.
+</p>
+
+<p>
 Let's see the cost field of our terrain: 
 </p>
 
 <img src="{{ site.baseurl }}/assets/img/cost_field.png" alt="Cost Field" style="width: 100%;"/>
 
 <p>
-As you can see, only the cells that have a significant height difference with their neighbours have a high cost. 
+As you can see, only the cells that have a significant height difference with their neighbours have a high cost. Which means
+it isn't favorable by agents to climb steep slopes.
 Let's see how this looks in the code:
 </p>
 
@@ -123,8 +129,16 @@ newCost = neighbour.cost + currentCell.bestCost
 
 <p>
 If this newCost is less than the neighbour's bestCost
-we update the neighbour's bestCost and add the neighbour to the queue. The bestCost of a cell represents the minimum
-total cost to reach the destination cell from that cell. We are going to use the best cost to calculate which direction the agent should go to 
+we update the neighbour's bestCost and add the neighbour to the queue. 
+</p>
+
+<p style="color: red;">
+The bestCost of a cell represents the minimum
+total cost to reach the destination cell from that cell. 
+</p>
+
+<p>
+We are going to use the best cost to calculate which direction the agent should go to 
 minimize the total cost. Let's see how this looks in the code:
 </p>
 
