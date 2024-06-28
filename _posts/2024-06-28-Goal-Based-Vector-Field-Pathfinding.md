@@ -15,7 +15,7 @@ Pathfinding algorithms are used in simulations and games extensively since they 
 There are many pathfinding algorithms out there. Some of the more know ones are \(A^*\), Dijkstra, BFS, DFS, etc. We will actually use BFS to create the integration field.
 </p>
 
-<h2>Vector Fields</h2> a
+<h2>Vector Fields</h2>
 <p>
 Before getting too ahead of ourselves, let's talk about vector fields. Let's see a formal definition:
 </p>
