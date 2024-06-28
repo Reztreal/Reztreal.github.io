@@ -188,7 +188,7 @@ our precious agent doesn't fall off a cliff. Let's see our vector field:
 <img src="{{ site.baseurl }}/assets/img/vector_field2.png" alt="Vector Field" style="width: 100%;"/>
 
 <p>
-As you can see we have create a vector field that encompasses the whole terrain. Each vector is pointing
+As you can see we have created a vector field that encompasses the whole terrain. Each vector is pointing
 towards the neighbour with the lowest best cost thanks to the integration field. I drew a few paths to show how the agent would move.
 And please notice that only the cells that have a height difference of 1 with their neighbours can point to each other, 
 so any two cells with a height difference of 2 or more will not point to each other.
